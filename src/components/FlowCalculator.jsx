@@ -17,6 +17,7 @@ import {
   projectedFlowNfpa291Gpm,
   nfpa291RatingPressurePsi,
 } from '../lib/hydrantFlowFormulas'
+import AISummaryBox from './AISummaryBox'
 
 /** Crosshair cursor: vertical line from point to x-axis, horizontal line from point to y-axis. Requires Tooltip shared={true}. */
 function CrosshairCursor(props) {
@@ -166,6 +167,15 @@ function FlowCalculator() {
 
   const showChart =
     curveData.length > 0 && measuredPoint && totalFlow > 0 && staticNum > 0
+
+  const percentDrop =
+    staticNum > 0 && residualNum < staticNum
+      ? ((staticNum - residualNum) / staticNum) * 100
+      : undefined
+  const primaryPitot =
+    outlets[0]?.pitot !== '' && outlets[0]?.pitot != null
+      ? Number(outlets[0].pitot)
+      : undefined
 
   // Y-axis max: 5–10 psi above static, rounded to nearest multiple of 10
   const yAxisMax = useMemo(() => {
@@ -458,6 +468,17 @@ function FlowCalculator() {
           </div>
         </div>
       )}
+
+      <div className="mt-10">
+        <AISummaryBox
+          staticPressure={staticNum || undefined}
+          residualPressure={residualNum || undefined}
+          pitotPressure={primaryPitot}
+          flowAt20={projectedFlow > 0 ? projectedFlow : undefined}
+          gpmMeasured={totalFlow > 0 ? totalFlow : undefined}
+          percentDrop={percentDrop}
+        />
+      </div>
     </section>
   )
 }

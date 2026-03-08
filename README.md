@@ -680,3 +680,82 @@ Open [http://localhost:5173](http://localhost:5173) to view the app.
 ## Customize
 
 - **Footer name:** Edit `src/components/Footer.jsx` and replace "Your Name" with your name.
+
+---
+
+## Latest Additions (March 8, 2026)
+
+### 1. Deployment Workflow (Docs Folder Method)
+
+The project uses the **GitHub Pages docs-folder deployment method**. Built assets are served from the `docs` folder on the `main` branch.
+
+**Workflow:**
+
+1. Run `npm run build` to produce the production build in `dist`.
+2. Copy the contents of `dist` into the `docs` folder (overwriting existing files as needed).
+3. Commit and push the updated `docs` folder to the repository.
+
+GitHub Pages is configured to serve the site from **Source: main branch → /docs**.
+
+---
+
+### 2. AI-Generated Summary Box
+
+A new React component, **`AISummaryBox.jsx`**, provides a dynamic, natural-language interpretation of hydrant flow test results. The summary:
+
+- Generates an interpretive narrative based on the current test data (static pressure, residual pressure, pitot pressure, flow at rating residual, measured flow, and pressure drop).
+- Updates automatically whenever user inputs change.
+- Uses logic inspired by industry standards (AWWA M17, M31, M32, and NFPA 291) without quoting or reproducing copyrighted content from those documents.
+
+The summary is displayed in a dedicated box below the pressure–flow chart and is organized by reference (NFPA 291, AWWA M31/M32, AWWA M31, AWWA M17) with bullet points for each interpretation.
+
+---
+
+### 3. Uncertainty-Language Enhancement
+
+The AI-generated summary uses **professional engineering uncertainty language** to align with engineering communication practices and avoid over-certainty. Examples of phrasing include:
+
+- "Based on the measured values…"
+- "These results suggest…"
+- "This indicates that the system may…"
+- "The available data implies…"
+- "This hydrant appears to…"
+- "The pressure drop pattern may indicate…"
+- "The system could be experiencing…"
+- "This level of fire flow is generally consistent with…"
+
+The tone is clear, neutral, interpretive, and evidence-based, resembling a professional engineering memo.
+
+---
+
+### 4. Interpretation Logic
+
+The summary box applies conditional logic to produce interpretations in four areas:
+
+| Area | Description |
+|------|-------------|
+| **NFPA 291 pressure drop** | Interprets percent pressure drop (e.g., &lt;10% excellent stability, 10–25% normal distribution behavior, &gt;25% possible limited capacity or high demand). |
+| **AWWA M31/M32 fire flow** | Classifies available fire flow at the rating residual into capacity ranges (e.g., very low, low, moderate, good, high) and typical use contexts (minimal demand, rural, residential, suburban, commercial/industrial). |
+| **AWWA M17 hydrant performance** | Comments on pitot/outlet readings (e.g., unusually low or high) and recommends documenting outlet type and condition. |
+| **AWWA M31 system capacity** | Uses the relationship between static and residual pressure to infer main strength (e.g., strong, adequate, or constrained capacity under test flow). Optional system capacity classification can be included when provided. |
+
+All logic is driven by the calculated values passed as props; no outcomes are hardcoded.
+
+---
+
+### 5. UI Integration
+
+- **Placement:** The summary box appears **directly below the pressure–flow chart** section on the calculator page.
+- **Styling:** It uses the same visual language as the rest of the app: white background, `border-olsson-black/10` border, rounded corners, padding (`p-6`), and Olsson green for the section title ("AI-Generated Summary") and reference labels (NFPA 291, AWWA M31/M32, etc.). Body text uses `text-olsson-black/80` and `text-sm` for consistency with other cards.
+
+Flow values of 1,000 gpm and above are formatted with thousands separators (e.g., 1,500) in the summary text.
+
+---
+
+### 6. Future Enhancements (Optional)
+
+Possible directions for future development include:
+
+- **NFPA 291 hydrant color-coding** — Visual indication of hydrant flow rating (e.g., class/color per NFPA 291).
+- **Multi-paragraph summaries** — Option to expand the summary into longer, sectioned narrative form.
+- **Confidence-level indicators** — Optional labels or cues indicating relative confidence or data quality for the interpretations.
