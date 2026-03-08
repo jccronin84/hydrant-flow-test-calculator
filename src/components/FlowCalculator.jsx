@@ -267,7 +267,7 @@ function FlowCalculator() {
                   </div>
                   <div className="grid grid-cols-3 gap-3">
                     <label className="block">
-                      <span className="text-sm text-olsson-black/80">Diameter (in)</span>
+                      <span className="text-sm text-olsson-black/80">Outlet Diameter (in)</span>
                       <input
                         type="number"
                         min="0"
@@ -279,7 +279,7 @@ function FlowCalculator() {
                       />
                     </label>
                     <label className="block">
-                      <span className="text-sm text-olsson-black/80">Inlet Coefficient</span>
+                      <span className="text-sm text-olsson-black/80">Outlet Coefficient</span>
                       <select
                         value={outlet.coefficient}
                         onChange={(e) => updateOutlet(i, 'coefficient', e.target.value)}
