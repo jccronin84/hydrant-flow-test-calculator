@@ -5,11 +5,6 @@ function Header() {
         <h1 className="text-xl font-semibold tracking-tight text-olsson-black">
           Hydrant Flow Test Calculator
         </h1>
-        <img
-          src="/olsson-logo.svg"
-          alt="Olsson"
-          className="h-9 w-auto align-middle"
-        />
       </div>
     </header>
   )
